@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.app.livit.R;
+import com.app.livit.activity.LoginActivity;
 import com.app.livit.activity.MainActivity;
 import com.app.livit.utils.Constants;
 import com.app.livit.utils.PreferencesHelper;
@@ -45,10 +46,12 @@ public class RoleChoiceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 PreferencesHelper.getInstance().setDeliveryManActivated(Constants.PROFILETYPE_DELIVERYMAN);
-                Intent deliverymanIntent = new Intent(getActivity(), MainActivity.class);
-                startActivity(deliverymanIntent);
-                if (getActivity() != null)
-                    getActivity().finish();
+//                Intent deliverymanIntent = new Intent(getActivity(), MainActivity.class);
+//                startActivity(deliverymanIntent);
+//                if (getActivity() != null)
+//                    getActivity().finish();
+
+                ((LoginActivity)getActivity()).gotoDeliverymanDetailsFragment();
             }
         });
         cvSender.setOnClickListener(new View.OnClickListener() {

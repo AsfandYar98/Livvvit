@@ -1,6 +1,5 @@
 package com.app.livit.fragment.login;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.app.livit.R;
 import com.app.livit.activity.MainActivity;
 import com.app.livit.network.ProfileService;
@@ -30,6 +28,8 @@ import com.test.model.UserInfo;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Rémi OLLIVIER on 18/06/2018.
@@ -123,7 +123,7 @@ public class DeliverymanInfoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUESTCODE) {
+        if (resultCode == RESULT_OK && requestCode == REQUESTCODE) {
             ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
             if (returnValue.size() != 0) {
                 this.imageFilePath = returnValue.get(0);
@@ -133,6 +133,7 @@ public class DeliverymanInfoFragment extends Fragment {
                 ivUser.setVisibility(View.VISIBLE);
             }
         }
+
     }
 
     /**
@@ -155,4 +156,8 @@ public class DeliverymanInfoFragment extends Fragment {
         }
     }
 
+
+
+
 }
+

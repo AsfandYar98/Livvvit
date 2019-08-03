@@ -13,6 +13,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttribu
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool;
 import com.app.livit.R;
 import com.app.livit.fragment.login.CreateUserInfoFragment;
+import com.app.livit.fragment.login.DeliverymanInfoFragment;
 import com.app.livit.fragment.login.ForgotPasswordFragment;
 import com.app.livit.fragment.login.LoginFragment;
 import com.app.livit.fragment.login.OtherLoginFragment;
@@ -78,6 +79,12 @@ public class LoginActivity extends AppCompatActivity {
     {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, ProfileChoiceFragment.newInstance()).commit();
     }
+
+    public void gotoDeliverymanDetailsFragment()
+    {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, DeliverymanInfoFragment.newInstance()).commit();
+    }
+
 
 
     public void goToRoleChoiceFragment() {
