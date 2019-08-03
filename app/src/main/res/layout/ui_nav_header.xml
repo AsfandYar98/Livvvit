@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/nav_header"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:paddingTop="24dp"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_me"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/user"
+            android:contentDescription="@string/desc"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/nav_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"/>
+
+    </LinearLayout>
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nav_tv_nbdeliveries"
+        android:text="371\nlivraisons"
+        android:layout_below="@id/ll_me"
+        android:textColor="@color/white"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_rates"
+        android:orientation="vertical"
+        android:layout_below="@id/ll_me"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nav_tv_rate"
+            android:textColor="@color/white"
+            android:text="@string/rates"/>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nav_rb_rate"
+            android:rating="4.2"
+            android:numStars="5"
+            android:isIndicator="true"
+            android:progressTint="@color/white"
+            style="?android:attr/ratingBarStyleSmall"/>
+
+    </LinearLayout>-->
+
+    <View android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/ll_me"
+        android:layout_height="2dp"
+        android:layout_marginTop="6dp"
+        android:background="@color/colorPrimaryDark"/>
+
+</RelativeLayout>
+
+

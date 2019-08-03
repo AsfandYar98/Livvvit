@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/rounded_white_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_pickup"
+            android:text="@string/step4_picture"
+            android:textSize="24sp"
+            android:textColor="@color/colorBlack"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_delivery_addpicture"
+            android:text="@string/add_picture"
+            android:textSize="26sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="5dp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:id="@+id/iv_delivery_picture"
+                android:contentDescription="@string/desc"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/iv_delete_picture"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/delete"
+                android:layout_alignEnd="@id/iv_delivery_picture"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_delivery_finish"
+            android:layout_marginTop="10dp"
+            android:text="@string/validate"
+            style="@style/ButtonMain" />
+
+    </LinearLayout>
+
+</ScrollView>

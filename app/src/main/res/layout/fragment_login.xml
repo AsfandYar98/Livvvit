@@ -1,0 +1,47 @@
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/google_sign_in_button"
+            android:layout_width="308dp"
+            android:layout_height="52dp" />
+
+        <com.facebook.login.widget.LoginButton
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/facebook_sign_in_button"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="15dp"/>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:id="@+id/bt_signup"
+            android:text="@string/create_an_account"
+            style="@style/ButtonMain"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_other_login"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17sp"
+            android:text="@string/other_connection"
+            android:layout_marginTop="15dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

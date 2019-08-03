@@ -1,0 +1,29 @@
+<android.support.v4.widget.SwipeRefreshLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/srl_history_deliveryman"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_history_deliveryman"
+            android:visibility="visible"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_history_empty"
+            android:visibility="gone"
+            android:text="@string/empty_history"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

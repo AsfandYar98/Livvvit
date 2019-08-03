@@ -1,0 +1,46 @@
+{
+  "UserAgent": "MobileHub/1.0",
+  "Version": "1.0",
+  "CredentialsProvider": {
+    "CognitoIdentity": {
+      "Default": {
+        "PoolId": "eu-west-2:b989e0ca-94cf-4da9-9268-4d6353ecb4bb",
+        "Region": "eu-west-2"
+      }
+    }
+  },
+  "IdentityManager": {
+    "Default": {}
+  },
+  "CognitoUserPool": {
+    "Default": {
+      "PoolId": "eu-west-2_6x4kbYEao",
+      "AppClientId": "3p70lon8c0muticp993nb292t6",
+      "AppClientSecret": "o1o7vounsbn4ftto6b1g30rdfdu2nk7lckjdhkm2ltd7n9lvvvc",
+      "Region": "eu-west-2"
+    }
+  },
+  "S3TransferUtility": {
+    "Default": {
+      "Bucket": "livit-userfiles-mobilehub-1468282340",
+      "Region": "eu-west-2"
+    }
+  },
+  "PinpointAnalytics": {
+    "Default": {
+      "AppId": "cfb55d3c68674104b7fc4c9c85bbcdf8",
+      "Region": "us-east-1"
+    }
+  },
+  "PinpointTargeting": {
+    "Default": {
+      "Region": "eu-west-1"
+    }
+  },
+  "UserFileManager": {
+    "Default": {
+      "Bucket": "livit-userfiles-mobilehub-1468282340",
+      "Region": "eu-west-2"
+    }
+  }
+}

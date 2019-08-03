@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ll_state">
+
+        <!-- PAYMENT -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:id="@+id/tv_deliveryprogress_timepayment"
+                android:textAlignment="center"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/timeline_deliveryprogress_payment"
+                    android:progressDrawable="@drawable/progress_drawable"
+                    android:layout_centerHorizontal="true"/>
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:id="@+id/iv_deliveryprogress_payment"
+                    android:src="@drawable/payment_blue"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/desc"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_paymentstatus"
+                    android:text="@string/payment"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_paymentstatus_inprogress"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/tv_deliveryprogress_paymentstatus"
+                    android:textColor="@color/com_facebook_blue"
+                    android:text="@string/pending"
+                    android:visibility="visible"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- DELIVERY ACCEPT -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:id="@+id/tv_deliveryprogress_timeaccept"
+                android:textAlignment="center"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/timeline_deliveryprogress_accept"
+                    android:progressDrawable="@drawable/progress_drawable"
+                    android:layout_centerHorizontal="true"/>
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:id="@+id/iv_deliveryprogress_accept"
+                    android:src="@drawable/bike_grey"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/desc"
+                    android:visibility="gone"/>
+
+                <ProgressBar
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/pb_deliverydetails"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_acceptstatus"
+                    android:text="@string/searching_deliveryman"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_acceptstatus_inprogress"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/tv_deliveryprogress_acceptstatus"
+                    android:textColor="@color/com_facebook_blue"
+                    android:text="@string/pending"
+                    android:visibility="gone"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/iv_deliveryprogress_accept_deliveryman"
+                    android:src="@drawable/user"
+                    android:layout_below="@id/tv_deliveryprogress_acceptstatus"
+                    android:contentDescription="@string/desc"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_accept_deliverymanname"
+                    android:layout_toEndOf="@id/iv_deliveryprogress_accept_deliveryman"
+                    android:layout_marginStart="5dp"
+                    android:layout_below="@id/tv_deliveryprogress_acceptstatus"
+                    android:textColor="@color/grey"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_accept_deliverymancall"
+                    android:text="Appeler"
+                    android:drawableLeft="@android:drawable/sym_action_call"
+                    android:layout_alignStart="@id/tv_deliveryprogress_accept_deliverymanname"
+                    android:layout_below="@id/tv_deliveryprogress_accept_deliverymanname"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- PICK UP -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:id="@+id/tv_deliveryprogress_timepickup"
+                android:textAlignment="center"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/timeline_deliveryprogress_pickup"
+                    android:progressDrawable="@drawable/progress_drawable"
+                    android:layout_centerHorizontal="true"/>
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:id="@+id/iv_deliveryprogress_pickup"
+                    android:src="@drawable/pickup_grey"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/desc"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_pickupstatus"
+                    android:text="@string/pickup"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_pickupstatus_inprogress"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/tv_deliveryprogress_pickupstatus"
+                    android:textColor="@color/com_facebook_blue"
+                    android:text="@string/pending"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_pickupaddress"
+                    android:layout_below="@+id/tv_deliveryprogress_pickupstatus"
+                    android:maxLines="2"
+                    android:textColor="@color/grey"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- DROP OFF -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:id="@+id/tv_deliveryprogress_timedropoff"
+                android:textAlignment="center"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="2dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/timeline_deliveryprogress_dropoff"
+                    android:progressDrawable="@drawable/progress_drawable"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"/>
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:id="@+id/iv_deliveryprogress_dropoff"
+                    android:src="@drawable/dropoff_grey"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/desc"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_dropoffstatus"
+                    android:text="@string/delivery"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_dropoffstatus_inprogress"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/tv_deliveryprogress_dropoffstatus"
+                    android:textColor="@color/com_facebook_blue"
+                    android:text="@string/pending"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_deliveryprogress_dropoffaddress"
+                    android:layout_below="@+id/tv_deliveryprogress_dropoffstatus"
+                    android:maxLines="2"
+                    android:textColor="@color/grey"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.gms.maps.MapView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/map"
+        android:layout_below="@id/ll_state"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_above="@id/bt_validate"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:id="@+id/cv_deliveryinprogress_first"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:id="@+id/iv_delivery_vehicle"
+                            android:textSize="18sp"
+                            android:textColor="@color/grey"
+                            android:contentDescription="@string/desc"
+                            android:src="@drawable/bike_orange"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_deliveryinprogress_distance"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:id="@+id/iv_delivery_picture"
+                            android:textSize="18sp"
+                            android:textColor="@color/grey"
+                            android:contentDescription="@string/desc"
+                            android:src="@drawable/package_image"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_deliveryinprogress_weight"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginTop="2dp"
+                android:id="@+id/cv_deliveryinprogress_second"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:text="@string/contact_pickup"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_deliveryinprogress_pickupcontactname"
+                            android:layout_toStartOf="@id/sw_available"
+                            android:layout_alignParentStart="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/tv_deliveryinprogress_pickupcontactphone" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:id="@+id/ll_pickup"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_below="@id/tv_deliveryinprogress_pickupcontactname">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tv_deliveryinprogress_pickupaddress"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"/>
+
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/deliveryman_pin"
+                                android:id="@+id/iv_deliveryinprogress_pickupaddress"
+                                android:layout_marginTop="5dp"
+                                android:contentDescription="@string/desc" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/package_pickedup"
+                            android:layout_toStartOf="@id/sw_available"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_below="@id/ll_pickup"/>
+
+                        <Switch
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/pickup"
+                            android:id="@+id/sw_deliveryinprogress_pickupdone"
+                            android:layout_marginTop="5dp"
+                            android:contentDescription="@string/desc"
+                            android:layout_below="@id/ll_pickup"
+                            android:theme="@style/Switch"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginTop="2dp"
+                android:id="@+id/cv_deliveryinprogress_third"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_your_price"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:text="@string/dropoff_contact"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_deliveryinprogress_dropoffcontactname"
+                            android:layout_toStartOf="@id/sw_available"
+                            android:layout_alignParentStart="true"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:id="@+id/tv_deliveryinprogress_dropoffcontactphone" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:id="@+id/ll_dropoff"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_below="@id/tv_deliveryinprogress_dropoffcontactname">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/tv_deliveryinprogress_dropoffaddress"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"/>
+
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/deliveryman_pin"
+                                android:id="@+id/iv_deliveryinprogress_dropoffaddress"
+                                android:layout_marginTop="5dp"
+                                android:contentDescription="@string/desc" />
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/package_droppedoff"
+                            android:layout_toStartOf="@id/sw_available"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_below="@id/ll_dropoff"/>
+
+                        <Switch
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:src="@drawable/pickup"
+                            android:id="@+id/sw_deliveryinprogress_dropoffdone"
+                            android:layout_marginTop="5dp"
+                            android:contentDescription="@string/desc"
+                            android:layout_below="@id/ll_dropoff"
+                            android:theme="@style/Switch"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginTop="2dp"
+                android:id="@+id/cv_deliveryinprogress_fourth"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_confirmation_code"
+                        android:textSize="18sp"
+                        android:textColor="@color/grey"
+                        android:text="@string/verification_code"/>
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_input_verificationcode"
+                        android:layout_below="@id/tv_confirmation_code"
+                        android:layout_marginTop="5dp"
+                        android:textSize="24sp"
+                        android:textColor="@color/orange"
+                        android:hint="@string/confirm_code_hint"
+                        android:maxLength="6"
+                        android:inputType="number"
+                        android:textColorHint="@color/orange"
+                        android:layout_centerHorizontal="true"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pb_deliveryinprogress"
+        android:layout_centerInParent="true"/>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_validate"
+        android:text="@string/ok"
+        style="@style/ButtonFifth"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>

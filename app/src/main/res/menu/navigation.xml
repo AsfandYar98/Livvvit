@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Liv'vit">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_home"
+                    android:title="@string/title_home" />
+
+                <item
+                    android:id="@+id/nav_history"
+                    android:title="@string/title_history" />
+
+                <item
+                    android:id="@+id/nav_account"
+                    android:title="@string/title_account" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+    <item android:title="Plus">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <!--<item android:id="@+id/nav_about"
+                    android:title="@string/about"/>-->
+
+                <item android:id="@+id/nav_share"
+                    android:title="@string/share"
+                    android:checkable="false"/>
+
+                <item android:id="@+id/nav_contact"
+                    android:title="Contactez nous"
+                    />
+
+                <!--<item android:id="@+id/nav_test"
+                    android:title="Test"/>-->
+
+            </group>
+
+        </menu>
+
+    </item>
+
+</menu>

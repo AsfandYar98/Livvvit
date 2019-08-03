@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_paymentdone"
+        android:textColor="@color/white"
+        android:text="Paramètre validé !"
+        android:textSize="60sp"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/iv_vehicle"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/bike_blue"/>
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_info"
+            android:text="@string/validated_params_text"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="25dp"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|bottom"
+        android:layout_marginBottom="20dp">
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_home"
+            style="@style/ButtonThird"
+            android:text="@string/display_deliveries"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_back"
+            style="@style/ButtonMain"
+            android:text="@string/back_to_params"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_paymentdone"
+        android:textColor="@color/white"
+        android:text="Paiement validé !"
+        android:textSize="60sp"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/iv_deliveryman"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/user"/>
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/iv_deliveryvehicle"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/bike_blue"
+                android:layout_marginStart="30dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_info"
+            android:text="@string/alert_when_deliveryman_found"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="25dp"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_deliverystate"
+            style="@style/ButtonThird"
+            android:text="@string/deliverys_state"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_back"
+            style="@style/ButtonFourth"
+            android:text="@string/back_to_map"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

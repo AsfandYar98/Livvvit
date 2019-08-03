@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_delivery_address"
+                android:text="@string/delivery_address"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_delivery_street_number"
+                android:hint="@string/number_and_street"
+                tools:ignore="TextFields"
+                android:padding="8dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@color/lightGrey"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_delivery_zipcode"
+                android:hint="@string/zipcode"
+                android:padding="8dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@color/lightGrey"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_delivery_city"
+                android:hint="@string/city"
+                android:padding="8dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@color/lightGrey"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_delivery_other_info"
+                android:hint="@string/other_info"
+                android:padding="8dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@color/lightGrey"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_delivery_comment"
+                android:hint="@string/comment"
+                android:padding="8dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@color/lightGrey"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pb_delivery"
+        android:layout_above="@id/bt_delivery_next_step"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_delivery_next_step"
+        android:layout_alignParentBottom="true"
+        android:text="@string/next_step"
+        android:background="@color/grey"
+        android:textColor="@color/white"/>
+
+</RelativeLayout>
