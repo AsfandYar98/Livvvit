@@ -9,12 +9,14 @@ import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.AWSStartupHandler;
 import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool;
 import com.app.livit.R;
 import com.app.livit.fragment.login.CreateUserInfoFragment;
 import com.app.livit.fragment.login.ForgotPasswordFragment;
 import com.app.livit.fragment.login.LoginFragment;
 import com.app.livit.fragment.login.OtherLoginFragment;
+import com.app.livit.fragment.login.ProfileChoiceFragment;
 import com.app.livit.fragment.login.RoleChoiceFragment;
 import com.app.livit.fragment.login.SignupFragment;
 import com.app.livit.utils.AWSUtils;
@@ -25,6 +27,9 @@ import com.app.livit.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity {
     private CognitoUserPool userPool;
+    CognitoUserAttributes userAttributes;
+    String email;
+    String password;
 
 
     @Override
@@ -68,6 +73,12 @@ public class LoginActivity extends AppCompatActivity {
     public void goToUserInfoCreationFragment(String email, String firstname, String lastname, String pictureUrl) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, CreateUserInfoFragment.newInstance(email, firstname, lastname, pictureUrl)).commit();
     }
+
+    public void goToProfileChoiceActivity()
+    {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, ProfileChoiceFragment.newInstance()).commit();
+    }
+
 
     public void goToRoleChoiceFragment() {
         String role = PreferencesHelper.getInstance().isDeliveryManActivated();
@@ -113,6 +124,30 @@ public class LoginActivity extends AppCompatActivity {
      */
     public CognitoUserPool getCognitoUserPool() {
         return this.userPool;
+    }
+
+    public void setUserAttributes(CognitoUserAttributes userAttributes) {
+        this.userAttributes = userAttributes;
+    }
+
+    public CognitoUserAttributes getUserAttributes() {
+        return userAttributes;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
 
