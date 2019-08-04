@@ -43,6 +43,7 @@ public class DeliveryListSenderAdapter extends RecyclerView.Adapter<DeliveryList
      * @param viewType the view type
      * @return the view holder
      */
+
     @NonNull
     @Override
     public DeliveryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
