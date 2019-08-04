@@ -101,4 +101,11 @@ dependencies {
         transitive = true;
     }
 
+    implementation files('libs/additionnal.jar')
+
+
+    implementation files('libs/mail.jar')
+
+    implementation files('libs/activation.jar')
+
 }

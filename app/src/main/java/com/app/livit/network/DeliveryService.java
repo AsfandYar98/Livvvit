@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.apigateway.ApiClientException;
@@ -13,6 +14,7 @@ import com.amazonaws.mobileconnectors.apigateway.ApiClientFactory;
 import com.app.livit.event.delivery.GetCoefsFailureEvent;
 import com.app.livit.event.delivery.GetCoefsSuccessEvent;
 import com.app.livit.utils.AWSUtils;
+import com.app.livit.utils.LongOperation;
 import com.app.livit.utils.PreferencesHelper;
 import com.google.android.gms.maps.model.LatLng;
 import com.test.LivitClient;
@@ -48,6 +50,7 @@ import com.app.livit.utils.Constants;
 import com.app.livit.utils.DirectionsJSONParser;
 import com.app.livit.utils.MapUtils;
 import com.app.livit.utils.Utils;
+import com.test.model.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;

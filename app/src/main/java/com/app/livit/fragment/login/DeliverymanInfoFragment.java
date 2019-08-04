@@ -2,6 +2,7 @@ package com.app.livit.fragment.login;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,10 +26,16 @@ import com.app.livit.utils.Constants;
 import com.app.livit.utils.PreferencesHelper;
 import com.app.livit.utils.Utils;
 import com.bumptech.glide.Glide;
+import com.facebook.login.Login;
 import com.fxn.pix.Pix;
 import com.fxn.utility.PermUtil;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.test.model.UserInfo;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -109,6 +116,23 @@ public class DeliverymanInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if (!Utils.isPhoneNumberValid(etPhoneNumber.getText().toString()) || !etPhoneNumber.getText().toString().startsWith("+")) {
+                    etPhoneNumber.setError(getString(R.string.error_invalid_phone));
+                    return;
+                }
+                if (etFirstname.getText().toString().isEmpty()) {
+                    etFirstname.setError(getString(R.string.empty_field));
+                    return;
+                }
+                if (etLastname.getText().toString().isEmpty()) {
+                    etLastname.setError(getString(R.string.empty_field));
+                    return;
+                }
+                if (imageFilePath == null && pictureUrl == null) {
+                    Toast.makeText(Utils.getContext(), "Veuillez ajouter votre photo", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                   Thread t = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -126,6 +150,7 @@ public class DeliverymanInfoFragment extends Fragment {
         DmanDetails user = new DmanDetails(userInfo.getFirstname(), userInfo.getLastname(),this.etLastname.getText().toString(),this.etFirstname.getText().toString(),this.etPhoneNumber.getText().toString(),userInfo.getEmail(),"No");
 
         ((LoginActivity)getActivity()).getmDatabase().child(userInfo.getUserID()).setValue(user);
+        uploadImage(userInfo);
 
         ((LoginActivity)getActivity()).goToRoleChoiceFragment();
     }
@@ -178,7 +203,29 @@ public class DeliverymanInfoFragment extends Fragment {
     }
 
 
+    public void uploadImage(UserInfo user)
+    {
 
+
+        Uri file = Uri.fromFile(new File(imageFilePath));
+        StorageReference storageRef = ((LoginActivity)getActivity()).getStorage().getReference();
+        UploadTask uploadTask = storageRef.child("images/"+user.getUserID()+"Id-photo").putFile(file);
+
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+
+    }
 
 }
 
