@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bt_validatedelivery">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,87 +27,87 @@
                     android:paddingBottom="16dp">
 
                     <TextView
+                        android:id="@+id/tv_your_trip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tv_your_trip"
-                        android:textSize="16sp"
+                        android:text="@string/your_path"
                         android:textColor="@color/grey"
-                        android:text="@string/your_path"/>
+                        android:textSize="16sp" />
 
                     <ImageView
+                        android:id="@+id/iv_vehicle"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:id="@+id/iv_vehicle"
-                        android:src="@drawable/bike_blue"
-                        android:layout_marginTop="10dp"
                         android:layout_below="@id/tv_your_trip"
-                        android:contentDescription="@string/desc" />
+                        android:layout_marginTop="10dp"
+                        android:contentDescription="@string/desc"
+                        android:src="@drawable/bike_blue" />
 
                     <View
+                        android:id="@+id/progress1"
                         android:layout_width="40dp"
                         android:layout_height="2dp"
-                        android:id="@+id/progress1"
-                        android:layout_toEndOf="@+id/iv_vehicle"
                         android:layout_alignTop="@+id/iv_vehicle"
-                        android:layout_marginTop="24dp"
-                        android:background="@color/colorPrimary"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"/>
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toEndOf="@+id/iv_vehicle"
+                        android:background="@color/colorPrimary" />
 
                     <ImageView
+                        android:id="@+id/iv_pickup"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:id="@+id/iv_pickup"
-                        android:src="@drawable/pickup_blue"
-                        android:layout_marginTop="10dp"
                         android:layout_below="@id/tv_your_trip"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/progress1"
                         android:contentDescription="@string/desc"
-                        android:layout_toEndOf="@id/progress1"/>
+                        android:src="@drawable/pickup_blue" />
 
                     <LinearLayout
+                        android:id="@+id/progress2"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:id="@+id/progress2"
-                        android:layout_toEndOf="@+id/iv_pickup"
                         android:layout_alignTop="@+id/iv_vehicle"
-                        android:layout_marginTop="24dp"
-                        android:background="@color/colorPrimary"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="24dp"
                         android:layout_marginEnd="60dp"
-                        android:orientation="vertical"/>
+                        android:layout_toEndOf="@+id/iv_pickup"
+                        android:background="@color/colorPrimary"
+                        android:orientation="vertical" />
 
                     <ImageView
+                        android:id="@+id/iv_dropoff"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:id="@+id/iv_dropoff"
-                        android:src="@drawable/dropoff_blue"
-                        android:contentDescription="@string/desc"
-                        android:layout_marginTop="10dp"
                         android:layout_below="@id/tv_your_trip"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:contentDescription="@string/desc"
+                        android:src="@drawable/dropoff_blue" />
 
                     <TextView
+                        android:id="@+id/tv_pickup_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tv_pickup_duration"
+                        android:layout_below="@id/progress1"
                         android:layout_alignStart="@id/progress1"
                         android:layout_alignEnd="@id/progress1"
-                        android:layout_below="@id/progress1"
                         android:layout_marginTop="5dp"
                         android:text="@string/pickup_estimation"
-                        android:textColor="@color/colorBlack"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/colorBlack" />
 
                     <TextView
+                        android:id="@+id/tv_dropoff_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tv_dropoff_duration"
+                        android:layout_below="@id/progress2"
                         android:layout_alignStart="@id/progress2"
                         android:layout_alignEnd="@id/progress2"
-                        android:layout_below="@id/progress2"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/colorBlack"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/colorBlack" />
 
                 </RelativeLayout>
 
@@ -118,8 +116,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                android:layout_marginTop="2dp">
+                android:layout_marginTop="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -130,44 +128,44 @@
                     android:paddingBottom="16dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/tv_your_contact"
-                        android:textSize="16sp"
-                        android:textColor="@color/grey"
-                        android:text="@string/delivery_contact"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/delivery_contact"
+                        android:textColor="@color/grey"
+                        android:textSize="16sp" />
+
+                    <TextView
                         android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/grey"
                         android:text="@string/name"
-                        android:layout_marginStart="5dp"/>
+                        android:textColor="@color/grey" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/tv_contact_name"
-                        android:textColor="@color/colorBlack"
-                        android:layout_marginStart="5dp"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/colorBlack" />
+
+                    <TextView
                         android:id="@+id/tv_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/phone_number"
-                        android:textColor="@color/grey"
-                        android:layout_marginStart="5dp"/>
+                        android:textColor="@color/grey" />
 
                     <TextView
+                        android:id="@+id/tv_contact_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tv_contact_phone"
-                        android:textColor="@color/colorBlack"
-                        android:layout_marginStart="5dp"/>
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/colorBlack" />
 
                 </LinearLayout>
 
@@ -176,8 +174,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                android:layout_marginTop="2dp">
+                android:layout_marginTop="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -191,42 +189,67 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/package_info"
-                        android:textSize="16sp"
-                        android:textColor="@color/grey"/>
+                        android:textColor="@color/grey"
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_weight="5"
+                        android:layout_height="100dp"
+                        android:layout_weight="6"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/iv_user"
-                            android:layout_width="60dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="2"
-                            android:contentDescription="@string/desc" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_user"
+                                android:layout_width="100dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="3"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/desc"
+                                android:scaleType="fitCenter" />
+
+                            <TextView
+                                android:id="@+id/userName"
+                                android:layout_width="100dp"
+                                android:layout_height="20dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="expéditeur"
+                                android:textAlignment="center"
+                                android:textColor="@color/colorBlack" />
+
+                        </LinearLayout>
+
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="3"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
                             android:gravity="center"
                             android:orientation="vertical">
 
                             <ImageView
                                 android:id="@+id/iv_package"
-                                android:layout_width="60dp"
-                                android:layout_height="50dp"
-                                android:layout_weight="2"
-                                android:contentDescription="@string/desc" />
+                                android:layout_width="100dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="3"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/desc"
+                                android:scaleType="fitCenter" />
 
                             <TextView
                                 android:id="@+id/tv_package_weight"
-                                android:layout_width="60dp"
+                                android:layout_width="100dp"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:textAlignment="center"
                                 android:textColor="@color/colorBlack" />
 
@@ -242,87 +265,123 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                android:layout_marginTop="2dp">
+                android:layout_marginTop="2dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:paddingBottom="16dp"
-                    android:gravity="center_horizontal">
+                    android:paddingBottom="16dp">
 
                     <TextView
+                        android:id="@+id/tv_your_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tv_your_price"
-                        android:textSize="16sp"
+                        android:text="@string/the_price"
                         android:textColor="@color/grey"
-                        android:text="@string/the_price"/>
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/tv_price"
-                        android:textSize="40sp"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_marginTop="5dp"
-                        android:textAlignment="center"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tv_paymentinfo"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/deliveryman_will_be_paid_on_dropoff"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="40sp" />
 
                     <ProgressBar
+                        android:id="@+id/pb_validatedelivery"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/pb_validatedelivery"
-                        android:visibility="gone"
-                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="199dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                app:cardBackgroundColor="@color/white">
 
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="205dp"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    tools:srcCompat="@drawable/cash" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_weight="5"
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="236dp"
-                    android:clickable="true"
-                    android:layout_height="match_parent"
-                    tools:srcCompat="@drawable/card" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:layout_marginLeft="3dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="paiement à la livraison"
+                            android:textColor="@color/colorPrimary" />
+
+                        <ImageButton
+                            android:id="@+id/imageButton2"
+                            android:layout_width="206dp"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:clickable="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/cash" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:layout_marginRight="3dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="payer via cinetpay"
+                            android:textColor="@color/colorPrimary" />
+
+                        <ImageButton
+                            android:id="@+id/imageButton3"
+                            android:layout_width="236dp"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
+                            android:clickable="true"
+                            android:paddingRight="5dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/card" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
         </LinearLayout>
 
-    </ScrollView>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bt_validatedelivery"
-        android:text="@string/validate_delivery"
-        style="@style/ButtonMain"
-        android:layout_alignParentBottom="true"/>
+    </ScrollView>
 
 </RelativeLayout>
