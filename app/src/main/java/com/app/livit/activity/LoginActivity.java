@@ -25,13 +25,15 @@ import com.app.livit.utils.Constants;
 import com.app.livit.utils.PreferencesHelper;
 import com.app.livit.utils.SNSRegistration;
 import com.app.livit.utils.Utils;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity {
     private CognitoUserPool userPool;
     CognitoUserAttributes userAttributes;
     String email;
     String password;
-
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,11 @@ public class LoginActivity extends AppCompatActivity {
         //create userpool
         this.userPool = new CognitoUserPool(this, Constants.AWSCOGNITOUSERPOOLID, Constants.AWSCOGNITOAPPCLIENTID, Constants.AWSCOGNITOAPPCLIENTSECRET, Constants.AWSREGION);
         getSupportFragmentManager().beginTransaction().add(R.id.fragment, LoginFragment.newInstance()).commit();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+    }
+
+    public DatabaseReference getmDatabase() {
+        return mDatabase;
     }
 
     /**

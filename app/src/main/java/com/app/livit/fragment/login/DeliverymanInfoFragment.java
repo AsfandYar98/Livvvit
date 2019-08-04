@@ -17,8 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.livit.R;
+import com.app.livit.activity.LoginActivity;
 import com.app.livit.activity.MainActivity;
+import com.app.livit.model.DmanDetails;
 import com.app.livit.network.ProfileService;
+import com.app.livit.utils.Constants;
+import com.app.livit.utils.PreferencesHelper;
 import com.app.livit.utils.Utils;
 import com.bumptech.glide.Glide;
 import com.fxn.pix.Pix;
@@ -104,11 +108,28 @@ public class DeliverymanInfoFragment extends Fragment {
         this.btCreateUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+
+                  Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        uploadDetails();
+                    }
+                });
+                  t.start();
             }
         });
+
     }
+
+    private void uploadDetails() {
+        UserInfo userInfo = Utils.getFullUserInfo().getInfos().get(0);
+        DmanDetails user = new DmanDetails(userInfo.getFirstname(), userInfo.getLastname(),this.etLastname.getText().toString(),this.etFirstname.getText().toString(),this.etPhoneNumber.getText().toString(),userInfo.getEmail(),"No");
+
+        ((LoginActivity)getActivity()).getmDatabase().child(userInfo.getUserID()).setValue(user);
+
+        ((LoginActivity)getActivity()).goToRoleChoiceFragment();
+    }
+
 
     private void choosePicture() {
         Pix.start(this, REQUESTCODE);
