@@ -65,13 +65,13 @@ import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiTh
 
 public class SendPackageValidationFragment extends Fragment {
     private static final String DELIVERYARG = "DELIVERY";
-    private Button btValidate;
     private NewDelivery newDelivery;
     private TextView tvContactName;
     private TextView tvContactNumber;
     private TextView tvPickupEstimation;
     private TextView tvDropoffEstimation;
     private TextView tvWeight;
+    private TextView senderName;
     private TextView tvPrice;
     private ImageView ivPackagePicture, ivUser;
     private ImageView ivVehicle;
@@ -103,14 +103,14 @@ public class SendPackageValidationFragment extends Fragment {
         this.tvContactName = view.findViewById(R.id.tv_contact_name);
         this.tvContactNumber = view.findViewById(R.id.tv_contact_phone);
         this.tvWeight = view.findViewById(R.id.tv_package_weight);
+        this.senderName = view.findViewById(R.id.userName);
         this.ivPackagePicture = view.findViewById(R.id.iv_package);
-        this.btValidate = view.findViewById(R.id.bt_validatedelivery);
         this.progressBar = view.findViewById(R.id.pb_validatedelivery);
         this.tvPrice = view.findViewById(R.id.tv_price);
         this.ivVehicle = view.findViewById(R.id.iv_vehicle);
         this.ivUser = view.findViewById(R.id.iv_user);
-        cod = view.findViewById(R.id.imageButton2);
-        cinetpay = view.findViewById(R.id.imageButton3);
+        this.cod = view.findViewById(R.id.imageButton2);
+        this.cinetpay = view.findViewById(R.id.imageButton3);
 
 
         cinetpay.setOnClickListener(new View.OnClickListener() {
@@ -159,8 +159,6 @@ public class SendPackageValidationFragment extends Fragment {
         });
 
 
-
-
         //if coeffs are not available
         if (Utils.getCoefs() == null) {
             Toast.makeText(Utils.getContext(), "Impossible de créer une livraison pour le moment, veuillez réessayer", Toast.LENGTH_LONG).show();
@@ -184,13 +182,18 @@ public class SendPackageValidationFragment extends Fragment {
                 this.tvContactName.setText(this.newDelivery.getRecipient().getName());
                 this.tvContactNumber.setText(this.newDelivery.getRecipient().getPhoneNumber());
                 this.tvWeight.setText(String.valueOf(this.newDelivery.getPackageWeight() + "kg"));
+
+                UserInfo userInfo = Utils.getFullUserInfo().getInfos().get(0);
+                if (userInfo == null) {
+                    new ProfileService().getFullUserInfo();
+                }
+
+                this.senderName.setText(getString(R.string.formatted_name, userInfo.getFirstname(), userInfo.getLastname()));
                 this.tvPrice.setText(getString(R.string.formatted_price, Utils.toFormattedDouble(DeliveryUtils.calculatePrice(newDelivery, Utils.getCoefs()))));
             } else {
                 Log.d("newDelivery", "Null");
             }
         }
-
-        btValidate.setVisibility(View.GONE);
 
         //create the delivery after the last checks
         this.cod.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +242,6 @@ public class SendPackageValidationFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
             progressBar.setIndeterminate(false);
             progressBar.setProgress(0);
-            btValidate.setClickable(false);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -269,7 +271,6 @@ public class SendPackageValidationFragment extends Fragment {
     public void onEvent(CreateDeliverySuccessEvent event) {
         this.progressBar.setVisibility(View.GONE);
         Toast.makeText(Utils.getContext(), "Livraison créée", Toast.LENGTH_SHORT).show();
-        this.btValidate.setClickable(true);
         if (getActivity() != null) {
             ((FinalizeDeliveryActivity) getActivity()).setCreated(true);
             ((FinalizeDeliveryActivity) getActivity()).goToDeliveryPaidFragment(event.getDelivery().getDeliveryID());
@@ -290,7 +291,8 @@ public class SendPackageValidationFragment extends Fragment {
         @Override
         public void onError(int id, Exception e) {
             Log.e("onError", "Error during upload: " + id, e);
-            btValidate.setClickable(true);
+            cinetpay.setClickable(true);
+            cod.setClickable(true);
         }
 
         @Override

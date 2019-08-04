@@ -55,16 +55,6 @@
         android:id="@+id/ic_gps"
         app:srcCompat="@drawable/ic_gps"/>
 
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/relLayout1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:scaleType="centerCrop"
-        android:id="@+id/place_info"
-        app:srcCompat="@drawable/ic_info"/>
-
 
     <Button
         android:id="@+id/btn_set_garage_location"
