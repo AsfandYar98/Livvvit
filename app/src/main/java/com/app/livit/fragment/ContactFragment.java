@@ -45,8 +45,8 @@ public class ContactFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        email=getActivity().findViewById(R.id.email);
-        whatsapp=getActivity().findViewById(R.id.whatsapp);
+        email=view.findViewById(R.id.email);
+        whatsapp=view.findViewById(R.id.whatsapp);
 
         email.setOnClickListener(new View.OnClickListener() {
             @Override

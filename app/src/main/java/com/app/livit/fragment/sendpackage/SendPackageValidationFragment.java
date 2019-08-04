@@ -76,7 +76,7 @@ public class SendPackageValidationFragment extends Fragment {
     private ImageView ivPackagePicture, ivUser;
     private ImageView ivVehicle;
     private ProgressBar progressBar;
-    private MyDelivery delivery;
+    private Delivery delivery;
     private boolean missingInfo = true;
     private ImageButton cod;
     private ImageButton cinetpay;
@@ -122,13 +122,15 @@ public class SendPackageValidationFragment extends Fragment {
                 String trans_id = String.valueOf(new Date().getTime());
                 int amount = 100;
 
-                delivery = new MyDelivery();
+                delivery = new Delivery();
                 if (newDelivery.getInsurance() != null) {
                     delivery.setInsurance(newDelivery.getInsurance().getName());
                     delivery.setInsurancePrice(BigDecimal.valueOf(newDelivery.getInsurance().getPrice()));
                     delivery.setEstimatedValue(BigDecimal.valueOf(newDelivery.getInsurance().getPackageEstimatedValue()));
                 }
-                delivery.setPackageSize(newDelivery.getSize());
+
+
+                delivery.setDeliveryStatus("PAID");
                 delivery.setLatStart(BigDecimal.valueOf(newDelivery.getPosStart().latitude));
                 delivery.setLonStart(BigDecimal.valueOf(newDelivery.getPosStart().longitude));
                 delivery.setLatEnd(BigDecimal.valueOf(newDelivery.getPosEnd().latitude));
@@ -140,7 +142,17 @@ public class SendPackageValidationFragment extends Fragment {
                 delivery.setDeliveryPrice(BigDecimal.valueOf(DeliveryUtils.calculatePrice(newDelivery, Utils.getCoefs())));
                 double totalPrice = newDelivery.getInsurance() != null ? delivery.getDeliveryPrice().doubleValue() + delivery.getInsurancePrice().doubleValue() : delivery.getDeliveryPrice().doubleValue();
                 delivery.setTotalPrice(BigDecimal.valueOf(totalPrice));
-                 amount = (int) totalPrice;
+
+                if (Utils.getFullUserInfo() == null) {
+                    new ProfileService().getFullUserInfo();
+                } else {
+                    delivery.setSenderName(Utils.getFullUserInfo().getInfos().get(0).getFirstname());
+                    delivery.setSenderPhoneNumber(Utils.getFullUserInfo().getInfos().get(0).getPhoneNumber());
+                    createDelivery();
+                }
+
+
+                amount = (int) totalPrice;
                 String currency = "CFA";
                 String designation = "Purchase test";
                 String custom = " ";
@@ -155,6 +167,7 @@ public class SendPackageValidationFragment extends Fragment {
                 intent.putExtra(CinetPayActivity.KEY_DESIGNATION, designation);
                 intent.putExtra(CinetPayActivity.KEY_CUSTOM, custom);
                 startActivity(intent);
+
             }
         });
 
@@ -204,13 +217,13 @@ public class SendPackageValidationFragment extends Fragment {
                     return;
                 }
 
-                delivery = new MyDelivery();
+                delivery = new Delivery();
                 if (newDelivery.getInsurance() != null) {
                     delivery.setInsurance(newDelivery.getInsurance().getName());
                     delivery.setInsurancePrice(BigDecimal.valueOf(newDelivery.getInsurance().getPrice()));
                     delivery.setEstimatedValue(BigDecimal.valueOf(newDelivery.getInsurance().getPackageEstimatedValue()));
                 }
-                delivery.setPackageSize(newDelivery.getSize());
+                delivery.setDeliveryStatus("CREATED");
                 delivery.setLatStart(BigDecimal.valueOf(newDelivery.getPosStart().latitude));
                 delivery.setLonStart(BigDecimal.valueOf(newDelivery.getPosStart().longitude));
                 delivery.setLatEnd(BigDecimal.valueOf(newDelivery.getPosEnd().latitude));

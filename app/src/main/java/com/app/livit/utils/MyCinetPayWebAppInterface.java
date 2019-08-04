@@ -3,7 +3,10 @@ package com.app.livit.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
+import com.app.livit.activity.MainActivity;
+import com.cinetpay.sdkjs.CinetPayActivity;
 import com.cinetpay.sdkjs.CinetPayWebAppInterface;
 
 import org.json.JSONException;
@@ -25,6 +28,11 @@ public class MyCinetPayWebAppInterface extends CinetPayWebAppInterface {
             String cpm_trans_status = paymentInfo.getString ( "cpm_trans_status" );
             String cpm_error_message = paymentInfo.getString ( "cpm_error_message" );
             String cpm_custom = paymentInfo.getString ( "cpm_custom" );
+
+            Toast.makeText(getContext(),"Payment Done",Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            getContext().startActivity(intent);
 
 
         }
