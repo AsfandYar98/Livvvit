@@ -115,42 +115,6 @@ public class RoleChoiceFragment extends Fragment {
 
                 });
 
-
-//                ref.orderByChild("id")
-//                        .equalTo(userInfo.getUserID())
-//                        .limitToFirst(1)
-//                        .addChildEventListener(new ChildEventListener() {
-//                            @Override
-//                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                DmanDetails user = dataSnapshot.getValue(DmanDetails.class);
-//                                Intent senderIntent = new Intent(getActivity(), MainActivity.class);
-//                                startActivity(senderIntent);
-//                                if (getActivity() != null)
-//                                    getActivity().finish();
-//                            }
-//
-//                            @Override
-//                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//                                ((LoginActivity)getActivity()).gotoDeliverymanDetailsFragment();
-//                            }
-//                        });
-
-
             }
         });
         cvSender.setOnClickListener(new View.OnClickListener() {
