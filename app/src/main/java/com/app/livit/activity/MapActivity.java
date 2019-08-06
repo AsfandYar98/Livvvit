@@ -106,7 +106,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     //widgets
     private AutoCompleteTextView mSearchText;
-    private ImageView mGps, mInfo;
+    private ImageView mGps;
     private Button btnSetGarageLocation;
     private LatLng garageLocation;
 
@@ -117,7 +117,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient;
     private PlaceInfo mPlace;
-    private Marker mMarker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,7 +124,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
         mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
         mGps = (ImageView) findViewById(R.id.ic_gps);
-        mInfo = (ImageView) findViewById(R.id.place_info);
         btnSetGarageLocation = (Button) findViewById(R.id.btn_set_garage_location);
 
         getLocationPermission();
@@ -146,7 +144,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onMapClick(LatLng point) {
                 mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                mMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                 garageLocation = point;
             }
         });
@@ -179,23 +177,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked gps icon");
                 getDeviceLocation();
-            }
-        });
-
-        mInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked place info");
-                try{
-                    if(mMarker.isInfoWindowShown()){
-                        mMarker.hideInfoWindow();
-                    }else{
-                        Log.d(TAG, "onClick: place info: " + mPlace.toString());
-                        mMarker.showInfoWindow();
-                    }
-                }catch (NullPointerException e){
-                    Log.e(TAG, "onClick: NullPointerException: " + e.getMessage() );
-                }
             }
         });
 
@@ -261,8 +242,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
             garageLocation = latLng;
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM,
-                    address.getAddressLine(0));
+            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM);
         }
     }
 
@@ -284,8 +264,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                             garageLocation = latLng;
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM,
-                                    "My Location");
+                                    DEFAULT_ZOOM);
 
                         }else{
                             Log.d(TAG, "onComplete: current location is null");
@@ -299,47 +278,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    private void moveCamera(LatLng latLng, float zoom, PlaceInfo placeInfo){
+    private void moveCamera(LatLng latLng, float zoom){
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
-        mMap.clear();
-
-        mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapActivity.this));
-
-        if(placeInfo != null){
-            try{
-                String snippet = "Address: " + placeInfo.getAddress() + "\n" +
-                        "Phone Number: " + placeInfo.getPhoneNumber() + "\n" +
-                        "Website: " + placeInfo.getWebsiteUri() + "\n" +
-                        "Price Rating: " + placeInfo.getRating() + "\n";
-
-                MarkerOptions options = new MarkerOptions()
-                        .position(latLng)
-                        .title(placeInfo.getName())
-                        .snippet(snippet);
-                mMarker = mMap.addMarker(options);
-
-            }catch (NullPointerException e){
-                Log.e(TAG, "moveCamera: NullPointerException: " + e.getMessage() );
-            }
-        }else{
-            mMap.addMarker(new MarkerOptions().position(latLng));
-        }
-
-        hideSoftKeyboard();
-    }
-
-    private void moveCamera(LatLng latLng, float zoom, String title){
-        Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-
-        if(!title.equals("My Location")){
             MarkerOptions options = new MarkerOptions()
-                    .position(latLng)
-                    .title(title);
+                    .position(latLng);
             mMap.addMarker(options);
-        }
 
         hideSoftKeyboard();
     }
@@ -456,7 +401,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
 
             moveCamera(new LatLng(place.getViewport().getCenter().latitude,
-                    place.getViewport().getCenter().longitude), DEFAULT_ZOOM, mPlace);
+                    place.getViewport().getCenter().longitude), DEFAULT_ZOOM);
 
             places.release();
         }

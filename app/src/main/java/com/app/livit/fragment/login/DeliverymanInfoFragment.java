@@ -1,8 +1,8 @@
 package com.app.livit.fragment.login;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,19 +17,30 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.app.livit.R;
+import com.app.livit.activity.LoginActivity;
 import com.app.livit.activity.MainActivity;
+import com.app.livit.model.DmanDetails;
 import com.app.livit.network.ProfileService;
+import com.app.livit.utils.Constants;
+import com.app.livit.utils.PreferencesHelper;
 import com.app.livit.utils.Utils;
 import com.bumptech.glide.Glide;
+import com.facebook.login.Login;
 import com.fxn.pix.Pix;
 import com.fxn.utility.PermUtil;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.test.model.UserInfo;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Rémi OLLIVIER on 18/06/2018.
@@ -104,11 +115,46 @@ public class DeliverymanInfoFragment extends Fragment {
         this.btCreateUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+
+                if (!Utils.isPhoneNumberValid(etPhoneNumber.getText().toString()) || !etPhoneNumber.getText().toString().startsWith("+")) {
+                    etPhoneNumber.setError(getString(R.string.error_invalid_phone));
+                    return;
+                }
+                if (etFirstname.getText().toString().isEmpty()) {
+                    etFirstname.setError(getString(R.string.empty_field));
+                    return;
+                }
+                if (etLastname.getText().toString().isEmpty()) {
+                    etLastname.setError(getString(R.string.empty_field));
+                    return;
+                }
+                if (imageFilePath == null && pictureUrl == null) {
+                    Toast.makeText(Utils.getContext(), "Veuillez ajouter votre photo", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                  Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        uploadDetails();
+                    }
+                });
+                  t.start();
             }
         });
+
     }
+
+    private void uploadDetails() {
+        UserInfo userInfo = Utils.getFullUserInfo().getInfos().get(0);
+        DmanDetails user = new DmanDetails(userInfo.getFirstname(), userInfo.getLastname(),this.etLastname.getText().toString(),this.etFirstname.getText().toString(),this.etPhoneNumber.getText().toString(),userInfo.getEmail(),"No");
+
+        ((LoginActivity)getActivity()).getmDatabase().child(userInfo.getUserID()).setValue(user);
+        uploadImage(userInfo);
+
+        ((LoginActivity)getActivity()).goToRoleChoiceFragment();
+    }
+
 
     private void choosePicture() {
         Pix.start(this, REQUESTCODE);
@@ -123,7 +169,7 @@ public class DeliverymanInfoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUESTCODE) {
+        if (resultCode == RESULT_OK && requestCode == REQUESTCODE) {
             ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
             if (returnValue.size() != 0) {
                 this.imageFilePath = returnValue.get(0);
@@ -133,6 +179,7 @@ public class DeliverymanInfoFragment extends Fragment {
                 ivUser.setVisibility(View.VISIBLE);
             }
         }
+
     }
 
     /**
@@ -155,4 +202,30 @@ public class DeliverymanInfoFragment extends Fragment {
         }
     }
 
+
+    public void uploadImage(UserInfo user)
+    {
+
+
+        Uri file = Uri.fromFile(new File(imageFilePath));
+        StorageReference storageRef = ((LoginActivity)getActivity()).getStorage().getReference();
+        UploadTask uploadTask = storageRef.child("images/"+user.getUserID()+"Id-photo").putFile(file);
+
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+
+    }
+
 }
+

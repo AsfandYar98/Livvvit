@@ -21,6 +21,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.livit.utils.LongOperation;
 import com.app.livit.utils.MapUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -38,6 +39,7 @@ import com.app.livit.event.delivery.PickupDeliverySuccessEvent;
 import com.app.livit.network.DeliveryService;
 import com.app.livit.utils.Constants;
 import com.app.livit.utils.Utils;
+import com.test.model.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -278,6 +280,11 @@ public class DeliveryInprogressActivity extends AppCompatActivity {
      */
     private void dropedOffDelivery(final FullDelivery delivery, String code) {
         new DeliveryService().dropoffDelivery(delivery.getDelivery().getDeliveryID(), code);
+        UserInfo userInfo = Utils.getFullUserInfo().getInfos().get(0);
+
+        LongOperation l = new LongOperation(userInfo.getEmail(), String.valueOf(delivery.getDelivery().getTotalPrice()),delivery.getDelivery().getContactName(),userInfo.getFirstname());
+
+        l.execute();
     }
 
     /**

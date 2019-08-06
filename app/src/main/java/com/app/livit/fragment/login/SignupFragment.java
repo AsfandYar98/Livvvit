@@ -90,10 +90,10 @@ public class SignupFragment extends Fragment {
         textView.setClickable(true);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        TextView textView2 = view.findViewById(R.id.textView3);
-        checkbox2 = view.findViewById(R.id.checkBox2);
-        checkbox2.setText("");
-        textView2.setText(Html.fromHtml("Livvit Pro"));
+//        TextView textView2 = view.findViewById(R.id.textView3);
+//        checkbox2 = view.findViewById(R.id.checkBox2);
+//        checkbox2.setText("");
+//        textView2.setText(Html.fromHtml("Livvit Pro"));
         return view;
     }
 
@@ -129,50 +129,11 @@ public class SignupFragment extends Fragment {
 
             // Adding user's email address
             userAttributes.addAttribute("email", this.etMail.getText().toString());
-            String type="";
-            if(checkbox2.isChecked())
-            {
-                userAttributes.addAttribute("nickname", "Liv'vit Pro");
-                type = "Liv'vit Pro";
-            }
-            else
-            {
-                userAttributes.addAttribute("nickname", "Individual Liv'vit");
-                type = "Individual Liv'vit";
-            }
+            ((LoginActivity) getActivity()).setUserAttributes(userAttributes);
+            ((LoginActivity) getActivity()).setEmail(this.etMail.getText().toString());
+            ((LoginActivity) getActivity()).setPassword(this.etPassword.getText().toString());
+            ((LoginActivity) getActivity()).goToProfileChoiceActivity();
 
-            Toast.makeText(getContext(),type, Toast.LENGTH_LONG).show();
-
-            if (getActivity() == null) {
-                Toast.makeText(Utils.getContext(), "Impossible de traiter la demande", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            this.pb.setVisibility(View.VISIBLE);
-            ((LoginActivity) getActivity()).getCognitoUserPool().signUpInBackground(this.etMail.getText().toString(), this.etPassword.getText().toString(), userAttributes, null, new SignUpHandler() {
-                @Override
-                public void onSuccess(CognitoUser user, boolean userConfirmed, CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
-                    pb.setVisibility(View.GONE);
-                    if (!userConfirmed) {
-                        // This user must be confirmed and a confirmation code was sent to the user
-                        // cognitoUserCodeDeliveryDetails will indicate where the confirmation code was sent
-                        // Get the confirmation code from user
-                        Toast.makeText(Utils.getContext(), R.string.email_with_activation_link_sent, Toast.LENGTH_LONG).show();
-                        if (getActivity() != null)
-                            ((LoginActivity) getActivity()).goToLoginFragment();
-                    }
-                }
-
-                @Override
-                public void onFailure(Exception exception) {
-                    pb.setVisibility(View.GONE);
-                    if (exception.getClass() == UsernameExistsException.class) {
-                        Toast.makeText(Utils.getContext(), R.string.account_already_existing, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(Utils.getContext(), R.string.error, Toast.LENGTH_SHORT).show();
-                        Log.e("onFailure", exception.toString());
-                    }
-                }
-            });
         }
         else
         {

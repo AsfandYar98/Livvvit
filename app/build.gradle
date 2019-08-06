@@ -11,6 +11,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -89,6 +90,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.0'
     implementation 'com.cinetpay:sdkjs:2.0.0'
 
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -98,4 +100,12 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
         transitive = true;
     }
+
+    implementation files('libs/additionnal.jar')
+
+
+    implementation files('libs/mail.jar')
+
+    implementation files('libs/activation.jar')
+
 }
