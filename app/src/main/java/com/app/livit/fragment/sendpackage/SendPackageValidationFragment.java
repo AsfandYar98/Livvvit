@@ -116,12 +116,6 @@ public class SendPackageValidationFragment extends Fragment {
         cinetpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String api_key = "14387393415b2d2aa47b3d09.12552934"; // A remplacer par votre clé API
-                int site_id = 825933; // A remplacer par votre Site ID
-                String notify_url = "";
-                String trans_id = String.valueOf(new Date().getTime());
-                int amount = 100;
-
                 delivery = new Delivery();
                 if (newDelivery.getInsurance() != null) {
                     delivery.setInsurance(newDelivery.getInsurance().getName());
@@ -151,6 +145,11 @@ public class SendPackageValidationFragment extends Fragment {
                     createDelivery();
                 }
 
+                String api_key = "14387393415b2d2aa47b3d09.12552934"; // A remplacer par votre clé API
+                int site_id = 825933; // A remplacer par votre Site ID
+                String notify_url = "";
+                String trans_id = String.valueOf(new Date().getTime());
+                int amount = 100;
 
                 amount = (int) totalPrice;
                 String currency = "CFA";

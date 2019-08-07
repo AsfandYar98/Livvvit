@@ -1,8 +1,11 @@
 package com.app.livit.fragment.login;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentity;
 import com.amazonaws.services.cognitoidentity.AmazonCognitoIdentityClient;
 import com.amazonaws.services.cognitoidentity.model.GetIdRequest;
@@ -36,10 +40,13 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +56,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,7 +99,7 @@ public class LoginFragment extends Fragment {
         SignInButton btGoogleSignin = view.findViewById(R.id.google_sign_in_button);
         LoginButton loginButton = view.findViewById(R.id.facebook_sign_in_button);
 
-        loginButton.setReadPermissions("email");
+        loginButton.setReadPermissions(Arrays.asList("email","public_profile"));
         loginButton.setFragment(this);
         loginButton.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -116,7 +125,12 @@ public class LoginFragment extends Fragment {
         btGoogleSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+              //new GetAndSetGoogleToken().execute();
+
+
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
                         .requestEmail()
                         .build();
                 GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(), gso);
@@ -171,16 +185,17 @@ public class LoginFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                CognitoCachingCredentialsProvider provider = AWSUtils.getCredProvider(Utils.getContext());
+                CognitoCachingCredentialsProvider provider = new CognitoCachingCredentialsProvider( getApplicationContext(), Constants.AWSIDENTITYPOOLID, Constants.AWSREGION);
+
                 if (getActivity() != null)
                     ((LoginActivity) getActivity()).getCognitoUserPool().getCurrentUser().signOut();
 
                 Map<String, String> logins = new HashMap<>();
                 provider.clearCredentials();
                 provider.clear();
-                logins.put(authority, token);
+                logins.put("accounts.google.com", token);
                 Log.d(authority, token);
-                provider.setLogins(logins);
+                provider.withLogins(logins);
                 provider.refresh();
                 AmazonCognitoIdentity identityClient = new AmazonCognitoIdentityClient(provider.getCredentials());
                 identityClient.setRegion(Region.getRegion(Constants.AWSREGION));
@@ -332,6 +347,43 @@ public class LoginFragment extends Fragment {
             if (getActivity() != null) {
                 ((LoginActivity) getActivity()).goToRoleChoiceFragment();
             }
+        }
+    }
+
+    private class GetAndSetGoogleToken extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            String token = null;
+            try {
+
+                GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+
+                AccountManager am = AccountManager.get(getApplicationContext());
+                Account[] accounts = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
+
+                token = GoogleAuthUtil.getToken(getApplicationContext(), accounts[0].name,
+                        "audience:server:client_id:" + "826084351511-tnaahfmsqvh3gb13m1n3s5c2kvsp0jrt.apps.googleusercontent.com");
+
+            } catch(GoogleAuthException ex) {
+                Log.d("TOKENSCENE", "GoogleAuthException has been thrown by GetAndSetGoogleToken!");
+
+            } catch(IOException ex2) {
+
+                Log.d("TOKENSCENE", "IOException has been thrown by GetAndSetGoogleToken!");
+            }
+
+            return token;
+        }
+
+        @Override
+        protected void onPostExecute(String token) {
+
+            // Passing the ID Token as an Extra to the Intent and starting a new Activity.
+            nextPage("accounts.google.com",token);
+
+            super.onPostExecute(token);
         }
     }
 }
