@@ -3,6 +3,7 @@ package com.app.livit.fragment.login;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -81,6 +82,7 @@ public class SignupFragment extends Fragment {
             }
         });
 
+        etPhoneNumber.setText(this.GetCountryZipCode());
 
         TextView textView = view.findViewById(R.id.textView2);
         checkbox = view.findViewById(R.id.checkBox1);
@@ -90,10 +92,6 @@ public class SignupFragment extends Fragment {
         textView.setClickable(true);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
-//        TextView textView2 = view.findViewById(R.id.textView3);
-//        checkbox2 = view.findViewById(R.id.checkBox2);
-//        checkbox2.setText("");
-//        textView2.setText(Html.fromHtml("Livvit Pro"));
         return view;
     }
 
@@ -139,5 +137,24 @@ public class SignupFragment extends Fragment {
         {
             Toast.makeText(getContext(), "Please accepet License Agreement", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private String GetCountryZipCode() {
+
+        String CountryID = "";
+        String CountryZipCode = "";
+
+        TelephonyManager manager = (TelephonyManager) getActivity().getSystemService(getActivity().TELEPHONY_SERVICE);
+        //getNetworkCountryIso
+        CountryID = manager.getSimCountryIso().toUpperCase();
+        String[] rl = this.getResources().getStringArray(R.array.CountryCodes);
+        for (int i = 0; i < rl.length; i++) {
+            String[] g = rl[i].split(",");
+            if (g[1].trim().equals(CountryID.trim())) {
+                CountryZipCode = g[0];
+                return CountryZipCode;
+            }
+        }
+        return CountryZipCode;
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,6 +113,8 @@ public class CreateUserInfoFragment extends Fragment {
                 choosePicture();
             }
         });
+
+        etPhoneNumber.setText(this.GetCountryZipCode());
 
         this.ivDeletePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -394,5 +397,24 @@ public class CreateUserInfoFragment extends Fragment {
                 Toast.makeText(Utils.getContext(), "Erreur lors de l'upload", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private String GetCountryZipCode() {
+
+        String CountryID = "";
+        String CountryZipCode = "";
+
+        TelephonyManager manager = (TelephonyManager) getActivity().getSystemService(getActivity().TELEPHONY_SERVICE);
+        //getNetworkCountryIso
+        CountryID = manager.getSimCountryIso().toUpperCase();
+        String[] rl = this.getResources().getStringArray(R.array.CountryCodes);
+        for (int i = 0; i < rl.length; i++) {
+            String[] g = rl[i].split(",");
+            if (g[1].trim().equals(CountryID.trim())) {
+                CountryZipCode = g[0];
+                return CountryZipCode;
+            }
+        }
+        return CountryZipCode;
     }
 }

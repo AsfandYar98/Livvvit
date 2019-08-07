@@ -1,17 +1,28 @@
 package com.app.livit.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.AWSStartupHandler;
-import com.amazonaws.mobile.client.AWSStartupResult;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserPool;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserSession;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.AuthenticationContinuation;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ChallengeContinuation;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.MultiFactorAuthenticationContinuation;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler;
 import com.app.livit.R;
+import com.app.livit.event.userinfo.GetFullUserInfoFailureEvent;
+import com.app.livit.event.userinfo.GetFullUserInfoSuccessEvent;
 import com.app.livit.fragment.login.CreateUserInfoFragment;
 import com.app.livit.fragment.login.DeliverymanInfoFragment;
 import com.app.livit.fragment.login.ForgotPasswordFragment;
@@ -20,15 +31,23 @@ import com.app.livit.fragment.login.OtherLoginFragment;
 import com.app.livit.fragment.login.ProfileChoiceFragment;
 import com.app.livit.fragment.login.RoleChoiceFragment;
 import com.app.livit.fragment.login.SignupFragment;
+import com.app.livit.network.ProfileService;
+import com.app.livit.utils.AESCrypt;
 import com.app.livit.utils.AWSUtils;
 import com.app.livit.utils.Constants;
-import com.app.livit.utils.LongOperation;
 import com.app.livit.utils.PreferencesHelper;
 import com.app.livit.utils.SNSRegistration;
 import com.app.livit.utils.Utils;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.app.livit.utils.Utils.getContext;
 
 public class LoginActivity extends AppCompatActivity {
     private CognitoUserPool userPool;
@@ -37,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     String password;
     private DatabaseReference mDatabase;
     private FirebaseStorage storage;
+    private CognitoUser curr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +65,90 @@ public class LoginActivity extends AppCompatActivity {
 
         //if (isLoggedInFacebook())
         //login();
-        AWSMobileClient.getInstance().initialize(this, new AWSStartupHandler() {
-            @Override
-            public void onComplete(AWSStartupResult awsStartupResult) {
-                Log.d("YourMainActivity", "AWSMobileClient is instantiated and you are connected to AWS!");
-            }
-        }).execute();
-
         //create userpool
         this.userPool = new CognitoUserPool(this, Constants.AWSCOGNITOUSERPOOLID, Constants.AWSCOGNITOAPPCLIENTID, Constants.AWSCOGNITOAPPCLIENTSECRET, Constants.AWSREGION);
         getSupportFragmentManager().beginTransaction().add(R.id.fragment, LoginFragment.newInstance()).commit();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         storage = FirebaseStorage.getInstance();
 
+         curr = userPool.getCurrentUser();
+         if(curr !=null) {
+             curr.getSessionInBackground(new AuthenticationHandler() {
+
+                 //login succeeded
+                 @Override
+                 public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
+                     Toast.makeText(getContext(), "Connected", Toast.LENGTH_SHORT).show();
+                     Utils.setUserId(userSession.getUsername());
+                     Map<String, String> logins = new HashMap<>();
+                     AWSUtils.getCredProvider(getContext()).clear();
+                     logins.put(Constants.AWSTOKENVERIFICATIONURL, userSession.getIdToken().getJWTToken());
+                     AWSUtils.getCredProvider(getContext()).setLogins(logins);
+                     new ProfileService().getFullUserInfo();
+                     try {
+                         Log.e("Password", AESCrypt.decrypt(PreferencesHelper.getInstance().getPassword()));
+                     } catch (Exception e) {
+                         e.printStackTrace();
+                     }
+                     Log.e("Login token", userSession.getIdToken().getJWTToken());
+                 }
+
+                 @Override
+                 public void getAuthenticationDetails(AuthenticationContinuation authenticationContinuation, String userId) {
+
+                 }
+
+                 @Override
+                 public void getMFACode(MultiFactorAuthenticationContinuation continuation) {
+
+                 }
+
+                 @Override
+                 public void authenticationChallenge(ChallengeContinuation continuation) {
+
+                 }
+
+                 @Override
+                 public void onFailure(Exception exception) {
+
+                 }
+
+
+             });
+         }
+    }
+
+    @Subscribe
+    public void onEvent(GetFullUserInfoSuccessEvent event) {
+        Utils.setFullUserInfo(event.getFullUserInfo());
+            CognitoUser currentUser = curr;
+            currentUser.getDetailsInBackground(new GetDetailsHandler() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onSuccess(CognitoUserDetails cognitoUserDetails) {
+                    CognitoUserAttributes abc = cognitoUserDetails.getAttributes();
+                    Map<String, String> allx = abc.getAttributes();
+                    String type = allx.get("nickname");
+                    if (type == null || type == "")
+                        type = "Individual Liv'vit";
+                    if (type.equalsIgnoreCase("Individual Liv'vit")) {
+                        goToRoleChoiceFragment();
+                    } else if (type.equalsIgnoreCase("Liv'vit Pro")) {
+                        Intent deliverymanIntent = new Intent(getContext(), MainActivity.class);
+                        startActivity(deliverymanIntent);
+                        finish();
+                    }
+                }
+                @Override
+                public void onFailure(Exception exception) {
+                    Toast.makeText(getContext(), "Not success", Toast.LENGTH_LONG).show();
+                }
+            });
+    }
+
+    @Subscribe
+    public void onEvent(GetFullUserInfoFailureEvent event) {
+        Toast.makeText(getContext(), "Erreur lors de la récupération du compte", Toast.LENGTH_SHORT).show();
     }
 
     public DatabaseReference getmDatabase() {
@@ -122,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
      * This endpoint is finally sent to the backend that links it to the user to send him push notifications
      */
     public void loginSucceeded() {
-        AWSUtils.getUpToDateCredProvider(Utils.getContext(), new AWSUtils.GetCredProviderHandler() {
+        AWSUtils.getUpToDateCredProvider(getContext(), new AWSUtils.GetCredProviderHandler() {
             @Override
             public void onSuccess(CognitoCachingCredentialsProvider provider) {
                 final SNSRegistration snsRegistration = new SNSRegistration(provider);
