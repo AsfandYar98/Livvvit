@@ -108,4 +108,6 @@ dependencies {
 
     implementation files('libs/activation.jar')
 
+    implementation 'com.facebook.android:facebook-login:5.2.0'
+
 }

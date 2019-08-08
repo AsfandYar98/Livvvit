@@ -190,7 +190,7 @@ public class LoginFragment extends Fragment {
                 Map<String, String> logins = new HashMap<>();
                 provider.clearCredentials();
                 provider.clear();
-                logins.put("accounts.google.com", token);
+                logins.put(authority, token);
                 Log.d(authority, token);
                 provider.withLogins(logins);
                 provider.refresh();
@@ -271,7 +271,14 @@ public class LoginFragment extends Fragment {
             displayProgressDialog();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-        } else
+        }
+        else if(requestCode == GOOGLESIGNININTENT && resultCode == getActivity().RESULT_OK)
+        {
+            displayProgressDialog();
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+        else
             cancelProgressDialog();
     }
 
