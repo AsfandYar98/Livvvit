@@ -95,6 +95,7 @@ public class FirstLaunchActivity extends AppCompatActivity implements TextToSpee
 
                 Intent intent = new Intent(FirstLaunchActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
 
         }, 1800);

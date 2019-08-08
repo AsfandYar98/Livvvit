@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.app.livit.R;
@@ -20,8 +21,8 @@ import com.app.livit.R;
 public class ContactFragment extends Fragment
 {
 
-    private Button email;
-    private Button whatsapp;
+    private ImageButton email;
+    private ImageButton whatsapp;
     public static ContactFragment newInstance() {
 
         ContactFragment fragment = new ContactFragment();
@@ -44,8 +45,8 @@ public class ContactFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        email=getActivity().findViewById(R.id.email);
-        whatsapp=getActivity().findViewById(R.id.whatsapp);
+        email=view.findViewById(R.id.email);
+        whatsapp=view.findViewById(R.id.whatsapp);
 
         email.setOnClickListener(new View.OnClickListener() {
             @Override

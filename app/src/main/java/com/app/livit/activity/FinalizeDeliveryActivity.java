@@ -11,6 +11,8 @@ import com.app.livit.fragment.sendpackage.DeliveryPaidFragment;
 import com.app.livit.fragment.sendpackage.SendPackageValidationFragment;
 import com.app.livit.model.NewDelivery;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by Rémi OLLIVIER on 24/06/2018.
  */

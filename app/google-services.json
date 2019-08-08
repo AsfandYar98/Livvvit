@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "826084351511-6uaehgdslmnb9np5vhk21pk1rasffrlp.apps.googleusercontent.com",
+          "client_id": "826084351511-tnaahfmsqvh3gb13m1n3s5c2kvsp0jrt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.livit",
+            "certificate_hash": "cce7da80687388afe4675b356f0fcfe59b7c7383"
+          }
+        },
+        {
+          "client_id": "826084351511-n1tpqoj8bg9g8l0jsj5c2b39ck1k9c3k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.app.livit",
@@ -33,11 +41,7 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "826084351511-llh92j72uaj6mmct00dtfn92sr7jtmod.apps.googleusercontent.com",
@@ -47,64 +51,10 @@
               "client_id": "826084351511-6g7kjbanoc5a6bgve3un21lbdm4j5ms4.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.livvit.livvitapp"
+                "bundle_id": "com.app.livit"
               }
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:826084351511:android:f6ed547d4bd69b70",
-        "android_client_info": {
-          "package_name": "com.app.livvit"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "826084351511-n1tpqoj8bg9g8l0jsj5c2b39ck1k9c3k.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.app.livvit",
-            "certificate_hash": "02de29585d152bd1590a2b068efbabee53bf242e"
-          }
-        },
-        {
-          "client_id": "826084351511-llh92j72uaj6mmct00dtfn92sr7jtmod.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAV3-bKtKC2uGD0_1k0xJeg64Tor2sROYE"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "826084351511-llh92j72uaj6mmct00dtfn92sr7jtmod.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "826084351511-6g7kjbanoc5a6bgve3un21lbdm4j5ms4.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.livvit.livvitapp"
-              }
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
