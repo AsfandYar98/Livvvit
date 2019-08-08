@@ -42,10 +42,10 @@ public class LongOperation extends AsyncTask<Void, Void, String> {
 
         try {
 
-            GMailSender sender = new GMailSender("crickethowzat7@gmail.com", "howzathowzat");
+            GMailSender sender = new GMailSender("contact@liv-vit.com", "contactlivvit");
 
 
-            sender.sendMail("Livraison Terminée",from+ ",Votre colis a été livré à"+ to + ". Le total des frais pour cette livraison est de "+price,"crickethowzat7@gmail.com", recipient);
+            sender.sendMail("Livraison Terminée",from+ ",Votre colis a été livré à"+ to + ". Le total des frais pour cette livraison est de "+price,"contact@liv-vit.com", recipient);
 
 
 

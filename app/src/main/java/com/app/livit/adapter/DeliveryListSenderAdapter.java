@@ -1,5 +1,9 @@
 package com.app.livit.adapter;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,13 +12,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.app.livit.utils.Constants;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.model.LatLng;
 import com.test.model.Delivery;
 
 import com.app.livit.R;
 import com.app.livit.utils.Utils;
 
+import java.io.InputStream;
 import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import static android.content.res.Resources.getSystem;
+import static com.app.livit.utils.Utils.formatDateString;
 
 /**
  * Created by Rémi OLLIVIER on 14/06/2018.
@@ -58,13 +71,48 @@ public class DeliveryListSenderAdapter extends RecyclerView.Adapter<DeliveryList
      */
     @Override
     public void onBindViewHolder(@NonNull final DeliveryViewHolder holder, int position) {
-        String date = Utils.formatDateString(array.get(position).getCreatedAt());
+
+        int x= Resources.getSystem().getDisplayMetrics().widthPixels;
+        int y = 300;
+        String dimensions = Integer.toString(x)+"x"+ Integer.toString(y);
+
+        String date = array.get(position).getCreatedAt();
         holder.tvDeliveryDate.setText(date != null ? date : "");
-        Glide.with(Utils.getContext()).load(array.get(position).getPicture()).into(holder.ivDeliveryImage);
+        String type = array.get(position).getDeliverymanVehicleType();
+        if(type!= null)
+            Glide.with(Utils.getContext()).load(holder.getBlueVehicleDrawable(type)).into(holder.ivDeliveryImage);
+
         holder.tvDeliveryPrice.setText(Utils.getContext().getString(R.string.formatted_price, Utils.toFormattedDouble(array.get(position).getTotalPrice().doubleValue())));
         holder.tvDeliveryDistance.setText(Utils.getContext().getString(R.string.formatted_distance, Utils.toFormattedDouble(array.get(position).getDistance().doubleValue())));
         holder.tvDeliverySender.setText(Utils.getContext().getString(R.string.sender_name, array.get(position).getSenderName()));
         holder.tvDeliveryWeight.setText(Utils.getContext().getString(R.string.formatted_weight, Utils.toFormattedDouble(array.get(position).getWeight().doubleValue())));
+
+        String STATIC_MAP_API_ENDPOINT = "http://maps.googleapis.com/maps/api/staticmap?size="+dimensions+
+                "&maptype=roadmap&path=";
+
+        String marker_me = "color:blue|label:|" + array.get(position).getLatStart().doubleValue() +","+array.get(position).getLonStart().doubleValue();
+        String marker_dest = "color:blue|label:|" + array.get(position).getLatEnd().doubleValue() +","+array.get(position).getLonEnd().doubleValue();
+        LatLng loc = new LatLng( array.get(position).getLatStart().doubleValue() ,array.get(position).getLonStart().doubleValue());
+        LatLng loc2= new LatLng(array.get(position).getLatEnd().doubleValue() ,array.get(position).getLonEnd().doubleValue());
+
+        try {
+            marker_me = URLEncoder.encode(marker_me, "UTF-8");
+            marker_dest = URLEncoder.encode(marker_dest, "UTF-8");
+
+            String path = "weight:5|color:green|"+array.get(position).getLatStart().doubleValue() +","+array.get(position).getLonStart().doubleValue() + "|"+array.get(position).getLatEnd().doubleValue() +","+array.get(position).getLonEnd().doubleValue();
+            path = URLEncoder.encode(path, "UTF-8");
+
+
+            String url = STATIC_MAP_API_ENDPOINT + path + "&markers=" + marker_me + "&markers=" + marker_dest +"&key=AIzaSyAZiffx6fX2_cN2z0B5XfBSy14m0-aUN-s";
+
+            Glide
+                    .with(Utils.getContext())
+                    .load(url)
+                    .into(holder.map);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -96,6 +144,7 @@ public class DeliveryListSenderAdapter extends RecyclerView.Adapter<DeliveryList
         private TextView tvDeliveryDistance;
         private TextView tvDeliveryWeight;
         private ImageView ivDeliveryImage;
+        private ImageView map;
 
         DeliveryViewHolder(View itemView) {
             super(itemView);
@@ -105,6 +154,15 @@ public class DeliveryListSenderAdapter extends RecyclerView.Adapter<DeliveryList
             this.tvDeliveryWeight = itemView.findViewById(R.id.tv_delivery_weight);
             this.tvDeliveryDistance = itemView.findViewById(R.id.tv_delivery_distance);
             this.tvDeliverySender = itemView.findViewById(R.id.tv_delivery_sendername);
+            this.map = itemView.findViewById(R.id.mapImage);
         }
+
+        int getBlueVehicleDrawable(String vehicleType) {
+            if (vehicleType.compareTo(Constants.VEHICLE_BICYCLE) == 0) return R.drawable.bike_blue;
+            else if (vehicleType.compareTo(Constants.VEHICLE_MOTO) == 0) return R.drawable.moto_blue;
+            else if (vehicleType.compareTo(Constants.VEHICLE_VAN) == 0) return R.drawable.truck_blue;
+            else return R.drawable.car_blue;
+        }
+
     }
 }

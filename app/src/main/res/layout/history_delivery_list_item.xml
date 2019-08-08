@@ -2,18 +2,26 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_weight="9"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/mapImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
+        android:layout_weight="6" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="4dp"
+        android:layout_weight="2"
         android:weightSum="2"
         android:orientation="horizontal"
         android:baselineAligned="false">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center">
@@ -31,22 +39,42 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="150dp"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_delivery_weight"
+                android:id="@+id/tv_delivery_sendername"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_delivery_distance"
-                android:textColor="@color/colorBlack"
-                android:textSize="16sp"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_delivery_weight"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dot"
+                    android:text=" - "
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_delivery_distance"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"/>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -56,6 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
+        android:layout_weight="1"
         android:padding="4dp"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
@@ -71,13 +100,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_delivery_date"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_delivery_sendername"
                 android:textColor="@color/white"
                 android:textSize="16sp"/>
 

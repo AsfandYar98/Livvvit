@@ -114,7 +114,7 @@ public class CreateUserInfoFragment extends Fragment {
             }
         });
 
-        etPhoneNumber.setText(this.GetCountryZipCode());
+        etPhoneNumber.setText("+"+this.GetCountryZipCode());
 
         this.ivDeletePicture.setOnClickListener(new View.OnClickListener() {
             @Override

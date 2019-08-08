@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,6 +102,8 @@ public class DeliverymanInfoFragment extends Fragment {
                 choosePicture();
             }
         });
+
+        etPhoneNumber.setText("+"+GetCountryZipCode());
 
         this.ivDeletePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,12 +208,9 @@ public class DeliverymanInfoFragment extends Fragment {
 
     public void uploadImage(UserInfo user)
     {
-
-
         Uri file = Uri.fromFile(new File(imageFilePath));
         StorageReference storageRef = ((LoginActivity)getActivity()).getStorage().getReference();
         UploadTask uploadTask = storageRef.child("images/"+user.getUserID()+"Id-photo").putFile(file);
-
 // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -224,8 +224,23 @@ public class DeliverymanInfoFragment extends Fragment {
                 // ...
             }
         });
-
     }
 
+    private String GetCountryZipCode() {
+        String CountryID = "";
+        String CountryZipCode = "";
+        TelephonyManager manager = (TelephonyManager) getActivity().getSystemService(getActivity().TELEPHONY_SERVICE);
+        //getNetworkCountryIso
+        CountryID = manager.getSimCountryIso().toUpperCase();
+        String[] rl = this.getResources().getStringArray(R.array.CountryCodes);
+        for (int i = 0; i < rl.length; i++) {
+            String[] g = rl[i].split(",");
+            if (g[1].trim().equals(CountryID.trim())) {
+                CountryZipCode = g[0];
+                return CountryZipCode;
+            }
+        }
+        return CountryZipCode;
+    }
 }
 

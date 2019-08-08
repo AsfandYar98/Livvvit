@@ -82,7 +82,7 @@ public class SignupFragment extends Fragment {
             }
         });
 
-        etPhoneNumber.setText(this.GetCountryZipCode());
+        etPhoneNumber.setText("+"+this.GetCountryZipCode());
 
         TextView textView = view.findViewById(R.id.textView2);
         checkbox = view.findViewById(R.id.checkBox1);

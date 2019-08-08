@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -176,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToSignupFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, SignupFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, SignupFragment.newInstance(),"Signup").commit();
     }
 
     public void goToUserInfoCreationFragment(String email, String firstname, String lastname, String pictureUrl) {
@@ -263,6 +264,17 @@ public class LoginActivity extends AppCompatActivity {
 
     public String getPassword() {
         return password;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentByTag("Signup") != null) {
+            // I'm viewing Fragment C
+            goToLoginFragment();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
 

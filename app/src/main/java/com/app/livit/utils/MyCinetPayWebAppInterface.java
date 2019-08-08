@@ -58,7 +58,7 @@ public class MyCinetPayWebAppInterface extends CinetPayWebAppInterface
                 delivery.setInsurancePrice(BigDecimal.valueOf(newDelivery.getInsurance().getPrice()));
                 delivery.setEstimatedValue(BigDecimal.valueOf(newDelivery.getInsurance().getPackageEstimatedValue()));
             }
-            delivery.setDeliveryStatus("CREATED");
+            delivery.setDeliveryStatus("PAID");
             delivery.setLatStart(BigDecimal.valueOf(newDelivery.getPosStart().latitude));
             delivery.setLonStart(BigDecimal.valueOf(newDelivery.getPosStart().longitude));
             delivery.setLatEnd(BigDecimal.valueOf(newDelivery.getPosEnd().latitude));
