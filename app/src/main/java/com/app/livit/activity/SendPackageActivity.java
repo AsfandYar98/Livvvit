@@ -260,10 +260,12 @@ public class SendPackageActivity extends AppCompatActivity{
     @Subscribe
     public void onEvent(GetCoefsSuccessEvent event) {
         Utils.setCoefs(event.getCoefs());
+        Toast.makeText(getApplicationContext(),"Coefs Sucess Event",Toast.LENGTH_SHORT);
     }
 
     @Subscribe
     public void onEvent(GetCoefsFailureEvent event) {
+        Toast.makeText(getApplicationContext(),"Coefs Failure Event",Toast.LENGTH_SHORT);
 
     }
 }

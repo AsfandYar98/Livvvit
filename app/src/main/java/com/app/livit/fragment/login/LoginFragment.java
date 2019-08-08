@@ -99,7 +99,7 @@ public class LoginFragment extends Fragment {
         SignInButton btGoogleSignin = view.findViewById(R.id.google_sign_in_button);
         LoginButton loginButton = view.findViewById(R.id.facebook_sign_in_button);
 
-        loginButton.setReadPermissions(Arrays.asList("email","public_profile"));
+        loginButton.setReadPermissions(Arrays.asList("email", "public_profile","user_friends"));
         loginButton.setFragment(this);
         loginButton.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -125,9 +125,6 @@ public class LoginFragment extends Fragment {
         btGoogleSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-              //new GetAndSetGoogleToken().execute();
-
 
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.default_web_client_id))
@@ -350,40 +347,4 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    private class GetAndSetGoogleToken extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            String token = null;
-            try {
-
-                GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
-
-                AccountManager am = AccountManager.get(getApplicationContext());
-                Account[] accounts = am.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-
-                token = GoogleAuthUtil.getToken(getApplicationContext(), accounts[0].name,
-                        "audience:server:client_id:" + "826084351511-tnaahfmsqvh3gb13m1n3s5c2kvsp0jrt.apps.googleusercontent.com");
-
-            } catch(GoogleAuthException ex) {
-                Log.d("TOKENSCENE", "GoogleAuthException has been thrown by GetAndSetGoogleToken!");
-
-            } catch(IOException ex2) {
-
-                Log.d("TOKENSCENE", "IOException has been thrown by GetAndSetGoogleToken!");
-            }
-
-            return token;
-        }
-
-        @Override
-        protected void onPostExecute(String token) {
-
-            // Passing the ID Token as an Extra to the Intent and starting a new Activity.
-            nextPage("accounts.google.com",token);
-
-            super.onPostExecute(token);
-        }
-    }
 }

@@ -116,7 +116,13 @@ public class SendPackageValidationFragment extends Fragment {
         cinetpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.setClickable(false);
                 delivery = new Delivery();
+                if (newDelivery.getDistance() == -1) {
+                    Toast.makeText(Utils.getContext(), "Veuillez patienter pendant le calcul de la distance...", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (newDelivery.getInsurance() != null) {
                     delivery.setInsurance(newDelivery.getInsurance().getName());
                     delivery.setInsurancePrice(BigDecimal.valueOf(newDelivery.getInsurance().getPrice()));
@@ -137,13 +143,6 @@ public class SendPackageValidationFragment extends Fragment {
                 double totalPrice = newDelivery.getInsurance() != null ? delivery.getDeliveryPrice().doubleValue() + delivery.getInsurancePrice().doubleValue() : delivery.getDeliveryPrice().doubleValue();
                 delivery.setTotalPrice(BigDecimal.valueOf(totalPrice));
 
-                if (Utils.getFullUserInfo() == null) {
-                    new ProfileService().getFullUserInfo();
-                } else {
-                    delivery.setSenderName(Utils.getFullUserInfo().getInfos().get(0).getFirstname());
-                    delivery.setSenderPhoneNumber(Utils.getFullUserInfo().getInfos().get(0).getPhoneNumber());
-                    createDelivery();
-                }
 
                 String api_key = "14387393415b2d2aa47b3d09.12552934"; // A remplacer par votre clé API
                 int site_id = 825933; // A remplacer par votre Site ID
@@ -165,11 +164,11 @@ public class SendPackageValidationFragment extends Fragment {
                 intent.putExtra(CinetPayActivity.KEY_CURRENCY, currency);
                 intent.putExtra(CinetPayActivity.KEY_DESIGNATION, designation);
                 intent.putExtra(CinetPayActivity.KEY_CUSTOM, custom);
+                intent.putExtra("delivery",newDelivery);
                 startActivity(intent);
 
             }
         });
-
 
         //if coeffs are not available
         if (Utils.getCoefs() == null) {
@@ -211,6 +210,7 @@ public class SendPackageValidationFragment extends Fragment {
         this.cod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setClickable(false);
                 if (newDelivery.getDistance() == -1) {
                     Toast.makeText(Utils.getContext(), "Veuillez patienter pendant le calcul de la distance...", Toast.LENGTH_SHORT).show();
                     return;

@@ -3,6 +3,7 @@ package com.app.livit.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.app.livit.model.NewDelivery;
 import com.app.livit.utils.MyCinetPayWebAppInterface;
 import com.cinetpay.sdkjs.CinetPayActivity;
 
@@ -23,7 +24,9 @@ public class MyCinetPayActivity extends CinetPayActivity {
         String designation = intent.getStringExtra(KEY_DESIGNATION);
         String custom = intent.getStringExtra(KEY_CUSTOM);
 
-        mWebView.addJavascriptInterface(new MyCinetPayWebAppInterface(this, api_key, site_id, notify_url, trans_id, amount, currency, designation, custom, true), "Android");
+        NewDelivery obj = (NewDelivery) intent.getSerializableExtra("delivery");
+
+        mWebView.addJavascriptInterface(new MyCinetPayWebAppInterface(this, api_key, site_id, notify_url, trans_id, amount, currency, designation, custom, true,obj), "Android");
     }
 }
 
