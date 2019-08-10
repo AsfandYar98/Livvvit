@@ -97,7 +97,7 @@ public class RoleChoiceFragment extends Fragment {
                                         getActivity().finish();
                                 } else {
                                     Toast.makeText(getContext(),"vous n'avez pas encore été vérifié",Toast.LENGTH_LONG).show();
-                                    ((LoginActivity)getActivity()).goToOtherLoginFragment();
+                                    //((LoginActivity)getActivity()).goToOtherLoginFragment();
                                 }
                             }
                         }

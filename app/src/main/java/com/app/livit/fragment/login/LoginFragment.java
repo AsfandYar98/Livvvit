@@ -157,7 +157,9 @@ public class LoginFragment extends Fragment {
 
         //if Facebook is logged in
         if (AccessToken.getCurrentAccessToken() != null)
+        {
             getFacebookInfo();
+        }
         else if (GoogleSignIn.getLastSignedInAccount(Utils.getContext()) != null) {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(Constants.GOOGLE_SIGNIN_CLIENTID)
@@ -182,7 +184,7 @@ public class LoginFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                CognitoCachingCredentialsProvider provider = new CognitoCachingCredentialsProvider( getApplicationContext(), Constants.AWSIDENTITYPOOLID, Constants.AWSREGION);
+                CognitoCachingCredentialsProvider provider = AWSUtils.getCredProvider(Utils.getContext());
 
                 if (getActivity() != null)
                     ((LoginActivity) getActivity()).getCognitoUserPool().getCurrentUser().signOut();
@@ -199,12 +201,12 @@ public class LoginFragment extends Fragment {
                 ((LoginActivity) getActivity()).getCognitoUserPool().getUser(identityClient.getId(new GetIdRequest().withLogins(logins).withIdentityPoolId(provider.getIdentityPoolId())).getIdentityId());
                 Log.d("IdentityId", identityClient.getId(new GetIdRequest().withLogins(logins).withIdentityPoolId(provider.getIdentityPoolId())).getIdentityId());
 
-                //cancelProgressDialog();
-
                 Utils.setUserId(identityClient.getId(new GetIdRequest().withLogins(logins).withIdentityPoolId(provider.getIdentityPoolId())).getIdentityId());
                 new ProfileService().getFullUserInfo();
+
             }
         }).start();
+        //cancelProgressDialog();
     }
 
     /**
@@ -332,7 +334,8 @@ public class LoginFragment extends Fragment {
      * @param event the event received
      */
     @Subscribe
-    public void onEvent(GetFullUserInfoFailureEvent event) {
+    public void onEvent(GetFullUserInfoFailureEvent event)
+    {
         cancelProgressDialog();
         Toast.makeText(Utils.getContext(), "Erreur lors de la récupération du compte", Toast.LENGTH_SHORT).show();
     }

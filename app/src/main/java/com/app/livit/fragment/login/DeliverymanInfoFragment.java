@@ -32,6 +32,9 @@ import com.fxn.pix.Pix;
 import com.fxn.utility.PermUtil;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.test.model.UserInfo;
@@ -152,7 +155,8 @@ public class DeliverymanInfoFragment extends Fragment {
         UserInfo userInfo = Utils.getFullUserInfo().getInfos().get(0);
         DmanDetails user = new DmanDetails(userInfo.getFirstname(), userInfo.getLastname(),this.etLastname.getText().toString(),this.etFirstname.getText().toString(),this.etPhoneNumber.getText().toString(),userInfo.getEmail(),"No");
 
-        ((LoginActivity)getActivity()).getmDatabase().child(userInfo.getUserID()).setValue(user);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child(userInfo.getUserID()).setValue(user);
         uploadImage(userInfo);
 
         ((LoginActivity)getActivity()).goToRoleChoiceFragment();
@@ -209,9 +213,9 @@ public class DeliverymanInfoFragment extends Fragment {
     public void uploadImage(UserInfo user)
     {
         Uri file = Uri.fromFile(new File(imageFilePath));
-        StorageReference storageRef = ((LoginActivity)getActivity()).getStorage().getReference();
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         UploadTask uploadTask = storageRef.child("images/"+user.getUserID()+"Id-photo").putFile(file);
-// Register observers to listen for when the download is done or if it fails
+        // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {

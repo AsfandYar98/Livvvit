@@ -41,9 +41,13 @@ import com.app.livit.utils.SNSRegistration;
 import com.app.livit.utils.Utils;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.test.model.UserInfo;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -203,9 +207,55 @@ public class LoginActivity extends AppCompatActivity {
         //if this user already choose a role, go to the main activity with his role, else go to role choice
         if (role.compareTo(getString(R.string.empty)) == 0 || PreferencesHelper.getInstance().getUserId().compareTo(Utils.getFullUserInfo().getInfos().get(0).getUserID()) != 0) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment, RoleChoiceFragment.newInstance()).commit();
-        } else {
-            Intent mainActivityIntent = new Intent(this, MainActivity.class);
-            startActivity(mainActivityIntent);
+        }
+        else if(PreferencesHelper.getInstance().isDeliveryManActivated().equalsIgnoreCase("Deliveryman"))
+            {
+                final UserInfo userInfo = Utils.getFullUserInfo().getInfos().get(0);
+                DatabaseReference ref = getmDatabase();
+
+
+                final int[] count = {0};
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot data: dataSnapshot.getChildren()) {
+                            if (data.getKey().equalsIgnoreCase(userInfo.getUserID())) {
+                                //do ur stuff
+                                count[0]++;
+                                String status = (String) data.child("status").getValue();
+                                if (status.equalsIgnoreCase("yes")) {
+                                    PreferencesHelper.getInstance().setDeliveryManActivated(Constants.PROFILETYPE_DELIVERYMAN);
+                                    Intent senderIntent = new Intent(getContext(), MainActivity.class);
+                                    startActivity(senderIntent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(getContext(),"vous n'avez pas encore été vérifié",Toast.LENGTH_LONG).show();
+                                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment, RoleChoiceFragment.newInstance()).commit();
+                                }
+                            }
+                        }
+
+                        if(count[0]==0)
+                        {
+                            gotoDeliverymanDetailsFragment();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
+
+
+        }
+
+        else
+        {
+            PreferencesHelper.getInstance().setDeliveryManActivated(Constants.PROFILETYPE_SENDER);
+            Intent senderIntent = new Intent(getContext(), MainActivity.class);
+            startActivity(senderIntent);
             finish();
         }
     }
