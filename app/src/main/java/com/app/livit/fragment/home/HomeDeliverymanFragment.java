@@ -187,8 +187,8 @@ public class HomeDeliverymanFragment extends MapFragment implements GoogleMap.On
         Log.d("GetWaitingDeliveriesFai", "Failure");
         if (event.getFailure().getCode() == 404)
             Toast.makeText(getContext(), "Veuillez renseigner vos préférences de livraison pour recevoir des courses", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(getContext(), "Erreur lors de la récupération des livraisons", Toast.LENGTH_SHORT).show();
+//        else
+//            Toast.makeText(getContext(), "Erreur lors de la récupération des livraisons", Toast.LENGTH_SHORT).show();
     }
 
     @Subscribe

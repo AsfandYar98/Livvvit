@@ -309,6 +309,7 @@ public class DeliveryService extends IntentService {
             @Override
             public void onFailure(Exception exception) {
                 //todo handle login
+                Log.d("GetPriceCoef","Failure");
             }
         });
     }
